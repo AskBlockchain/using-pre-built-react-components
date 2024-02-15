@@ -1,4 +1,11 @@
 import React, { useState } from "react";
+import AddBoxIcon from '@mui/icons-material/AddBox';
+import Box from '@mui/material/Box';
+import Fab from '@mui/material/Fab';
+import AddIcon from '@mui/icons-material/Add';
+import EditIcon from '@mui/icons-material/Edit';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import NavigationIcon from '@mui/icons-material/Navigation';
 
 function CreateArea(props) {
   const [note, setNote] = useState({
@@ -42,8 +49,31 @@ function CreateArea(props) {
           placeholder="Take a note..."
           rows="3"
         />
-        <button onClick={submitNote}>Add</button>
+        
+        <Fab color="primary" aria-label="add" onClick={submitNote}>
+        <AddIcon />
+      </Fab>
+        
       </form>
+
+
+      <Box sx={{ '& > :not(style)': { m: 1 } }}>
+      <Fab color="primary" aria-label="add">
+        <AddIcon />
+      </Fab>
+      <Fab color="secondary" aria-label="edit">
+        <EditIcon />
+      </Fab>
+      <Fab variant="extended">
+        <NavigationIcon sx={{ mr: 1 }} />
+        Navigate
+      </Fab>
+      <Fab disabled aria-label="like">
+        <FavoriteIcon />
+      </Fab>
+    </Box>
+
+      
     </div>
   );
 }
