@@ -1,25 +1,26 @@
 import React, { useState } from "react";
-import AddBoxIcon from '@mui/icons-material/AddBox';
-import Box from '@mui/material/Box';
-import Fab from '@mui/material/Fab';
-import AddIcon from '@mui/icons-material/Add';
-import EditIcon from '@mui/icons-material/Edit';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import NavigationIcon from '@mui/icons-material/Navigation';
+import AddBoxIcon from "@mui/icons-material/AddBox";
+import Box from "@mui/material/Box";
+import Fab from "@mui/material/Fab";
+import AddIcon from "@mui/icons-material/Add";
+import EditIcon from "@mui/icons-material/Edit";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import NavigationIcon from "@mui/icons-material/Navigation";
+import Zoom from "@mui/material/Zoom";
 
 function CreateArea(props) {
   const [note, setNote] = useState({
     title: "",
-    content: ""
+    content: "",
   });
 
   function handleChange(event) {
     const { name, value } = event.target;
 
-    setNote(prevNote => {
+    setNote((prevNote) => {
       return {
         ...prevNote,
-        [name]: value
+        [name]: value,
       };
     });
   }
@@ -28,52 +29,71 @@ function CreateArea(props) {
     props.onAdd(note);
     setNote({
       title: "",
-      content: ""
+      content: "",
     });
     event.preventDefault();
   }
 
+  let [checked, setChecked] = React.useState(false);
+
+  let boxClicked = () => {
+    setChecked(true);
+
+  };
+
+
+
   return (
     <div>
       <form className="create-note">
-        <input
+        {checked ? 
+          <input
           name="title"
           onChange={handleChange}
           value={note.title}
-          placeholder="Title"
-        />
-        <textarea
+          placeholder="Title"          
+        /> : null }
+      
+
+        <Zoom in={true} timeout={2000}>
+        <textarea 
+          onClick={boxClicked}
           name="content"
           onChange={handleChange}
           value={note.content}
           placeholder="Take a note..."
-          rows="3"
+          rows={checked ? 3 : 1}
         />
-        
-        <Fab color="primary" aria-label="add" onClick={submitNote}>
-        <AddIcon />
-      </Fab>
-        
+        </Zoom>
+       
+        <Zoom in={checked} timeout={1400} >
+          <Fab onClick={submitNote}>
+            <AddIcon />
+          </Fab>
+        </Zoom>
       </form>
 
 
-      <Box sx={{ '& > :not(style)': { m: 1 } }}>
-      <Fab color="primary" aria-label="add">
-        <AddIcon />
-      </Fab>
-      <Fab color="secondary" aria-label="edit">
-        <EditIcon />
-      </Fab>
-      <Fab variant="extended">
-        <NavigationIcon sx={{ mr: 1 }} />
-        Navigate
-      </Fab>
-      <Fab disabled aria-label="like">
-        <FavoriteIcon />
-      </Fab>
-    </Box>
+      <Box sx={{ "& > :not(style)": { m: 1 } }}>
 
-      
+        <Fab color="primary" aria-label="add">
+          <AddIcon />
+        </Fab>
+
+        <Fab color="secondary" aria-label="edit">
+          <EditIcon />
+        </Fab>
+
+        <Fab variant="extended">
+          <NavigationIcon sx={{ mr: 1 }} />
+          Navigate
+        </Fab>
+
+        <Fab disabled aria-label="like">
+          <FavoriteIcon />
+        </Fab>
+
+      </Box>
     </div>
   );
 }
